@@ -40,4 +40,4 @@ En la opción de foro tendremos en cuenta los siguientes puntos:
                 -   De una determinada fecha
                 -   De un tema determinado
                 
-Crea el entorno gráfico necesario para utilizar el script        
+Crea el entorno gráfico necesario para utilizar el scriptsas
