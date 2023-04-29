@@ -4,7 +4,7 @@ Add-Type -AssemblyName system.drawing
 $fobras = New-Object System.Windows.Forms.Form
 $fobras.Text = "En Obras"
 $fobras.Size = New-Object System.Drawing.Size(300,200)
-$fobras.WindowState = 'max'
+#$fobras.WindowState = 'max'
 $fobras.StartPosition='centerScreen'
 
 $mensaje = New-Object System.Windows.Forms.Label
