@@ -14,7 +14,7 @@ function  fForo {
 function  fExit {
     $menu.Close()    
 }
-#Estructura del menu pricipal
+#Area pricipal
 $menu = New-Object System.Windows.Forms.Form
 $menu.Text = 'Menu principal'
 $menu.StartPosition = 'centerscreen'
