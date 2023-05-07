@@ -6,6 +6,8 @@
         pero se añadiran 2 opciones de búsqueda por fecha o por tema
     - Los usuarios podrán añadir comentarios a temas, pero los temas son fijos
         la estructura <nick>#<fecha(dd/mm/yy)>#<cont. Com>
+
+    - Buscar una manera de dibujar rectangulos
 #>
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
