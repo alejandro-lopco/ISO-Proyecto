@@ -5,13 +5,38 @@
     - El menu después de inciar sesión mostrará los hilos en orden de creación
         pero se añadiran 2 opciones de búsqueda por fecha o por tema
     - Los usuarios podrán añadir comentarios a temas, pero los temas son fijos
-        la estructura <nick>#<fecha(dd/mm/yy)>#<cont. Com>
+        la estructura <Tema>#<nick>#<fecha(dd/mm/yy)>#<cont. Com>
 
     - Buscar una manera de dibujar rectangulos
+        o si no directamente juega con el color del fondo 
 #>
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
-
+#Declaración de funciones
+    function search {
+        
+    }
+    function dispTema {
+        foreach ($registro in Get-Content .\Misc\usrData\Posts.txt) {
+            $campos = $registro.Split('#')
+            $tema = $campos[0]
+            $nick = $campos[1]
+            $fecha = $campos[2]
+            $cont = $campos[3]
+            $spacing = 75
+            for ($i = 0; $i -lt $tema.Count; $i++) {
+                #Label Tema
+                    Write-Host $tema
+                    $lblTema = New-Object System.Windows.Forms.Label
+                    $lblTema.Text = $tema
+                    $lblTema.ForeColor = 'LightGreen'
+                    $lblTema.Font = New-Object System.Drawing.Font("Arial",14,[System.Drawing.FontStyle]::bold)
+                    $lblTema.Location = New-Object System.Drawing.Point(1100,$spacing)
+                    $lblTema.Size = New-Object System.Drawing.Size(300,50)
+                    $foro.Controls.Add($lblTema)
+            }
+        }
+    }
 # Area principal
     $foro = New-Object System.Windows.Forms.Form
     $foro.Text = 'Foro'
@@ -66,5 +91,23 @@ Add-Type -AssemblyName System.Drawing
     $lblOpc.Location = New-Object System.Drawing.Point(710,35)
     $lblOpc.ForeColor = 'LightCyan'
     $foro.Controls.Add($lblOpc)
+#Botón de buscar
+    $btSearch = New-Object System.Windows.Forms.Button
+    $btSearch.Text = 'Buscar'
+    $btSearch.Size = New-Object System.Drawing.Size(75,37)
+    $btSearch.Location = New-Object System.Drawing.Point(925, 45)
+    $btSearch.BackColor = 'White'
+    $btSearch.Add_Click({ search })
+    $foro.Controls.Add($btSearch)
+#Label Temas Disponibles
+    $lblTema = New-Object System.Windows.Forms.Label
+    $lblTema.Text = 'Temas Disponibles : '
+    $lblTema.ForeColor = 'LightGreen'
+    $lblTema.Font = New-Object System.Drawing.Font("Arial",20,[System.Drawing.FontStyle]::bold)
+    $lblTema.Location = New-Object System.Drawing.Point(1100,50)
+    $lblTema.Size = New-Object System.Drawing.Size(300,50)
+    $foro.Controls.Add($lblTema)
+#Lista Temas Disponibles
+    dispTema
 #Mostrar todo
 $foro.ShowDialog()

@@ -96,6 +96,7 @@ function checkAcc {
         $pass = $campos[2]
         if ($nick -ieq $txtNom.Text -and $pass -ieq $txtPass.Text) {
             Write-Host "Usuario encontrado, permitiendo acceso"
+            # Aquí va la instrucción de entrada al foro
         } else {
             Write-Host "Usuario no encontrado, ESTO NO VA"
         }
