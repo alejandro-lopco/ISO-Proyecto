@@ -5,18 +5,13 @@
     - El menu después de inciar sesión mostrará los hilos en orden de creación
         pero se añadiran 2 opciones de búsqueda por fecha o por tema
     - Los usuarios podrán añadir comentarios a temas, pero los temas son fijos
-        la estructura <Tema>#<nick>#<fecha(dd/mm/yy)>#<cont. Com>
+        la estructura <Tema>#<Id. Post>#<nick>#<fecha(dd/mm/yy)>#<cont. Com>
+        (Los posts creo que van a ir mejor si hago una tabla hash)
 
     - Buscar una manera de dibujar rectangulos
         o si no directamente juega con el color del fondo 
 #>
-Add-Type -AssemblyName System.Windows.Forms
-Add-Type -AssemblyName System.Drawing
-#Declaración de funciones
-    function search {
-        
-    }
-    function dispTema {
+<#
         foreach ($registro in Get-Content .\Misc\usrData\Posts.txt) {
             $campos = $registro.Split('#')
             $tema = $campos[0]
@@ -36,6 +31,45 @@ Add-Type -AssemblyName System.Drawing
                     $foro.Controls.Add($lblTema)
             }
         }
+
+        Esta función recorre el archivo de post y los intenta mostrar,
+            creo que no va por la variable $spacing
+#>
+<#
+    function loadArray {
+        $alumnos = @{}
+        foreach ($registroAlum in Get-Content ".\alumnos\alumnos.txt") {
+            $valoresAlum= @()
+            $camposAlum = $registroAlum.Split(":")
+            for ($i = 1; $i -lt 8; $i++) {
+                $valoresAlum += $camposAlum[$i]
+            }
+            $alumnos[$camposAlum[0]] = $valoresAlum
+        }
+        $asignaturas = @{}
+        foreach ($registroAsig in Get-Content ".\alumnos\asignaturas.txt") {
+            $valoresAsig = @()
+            $camposAsig = $registroAsig.Split(":")
+            for ($j = 1; $j -lt 3; $j++) {
+                $valoresAsig += $camposAsig[$j]
+            }
+            $asignaturas[[int]$camposAsig[0]] = $valoresAsig
+        }
+    }
+    
+    Esta función me puede servir para cargar los datos del archivo posts.txt
+        solo hay que adapatarla
+#>
+Add-Type -AssemblyName System.Windows.Forms
+Add-Type -AssemblyName System.Drawing
+#Declaración de funciones
+    function postDisplay {
+        
+    }
+    function search {
+        <#
+        
+        #>
     }
 # Area principal
     $foro = New-Object System.Windows.Forms.Form
@@ -100,14 +134,53 @@ Add-Type -AssemblyName System.Drawing
     $btSearch.Add_Click({ search })
     $foro.Controls.Add($btSearch)
 #Label Temas Disponibles
-    $lblTema = New-Object System.Windows.Forms.Label
-    $lblTema.Text = 'Temas Disponibles : '
-    $lblTema.ForeColor = 'LightGreen'
-    $lblTema.Font = New-Object System.Drawing.Font("Arial",20,[System.Drawing.FontStyle]::bold)
-    $lblTema.Location = New-Object System.Drawing.Point(1100,50)
-    $lblTema.Size = New-Object System.Drawing.Size(300,50)
-    $foro.Controls.Add($lblTema)
+    $lblTemas = New-Object System.Windows.Forms.Label
+    $lblTemas.Text = 'Temas Disponibles : '
+    $lblTemas.ForeColor = 'LightGreen'
+    $lblTemas.Font = New-Object System.Drawing.Font("Arial",20,[System.Drawing.FontStyle]::bold)
+    $lblTemas.Location = New-Object System.Drawing.Point(1100,50)
+    $lblTemas.Size = New-Object System.Drawing.Size(300,50)
+    $foro.Controls.Add($lblTemas)
 #Lista Temas Disponibles
-    dispTema
+    #1
+    $lblTema1 = New-Object System.Windows.Forms.Label
+    $lblTema1.Text = 'Deportes'
+    $lblTema1.ForeColor = 'LightGreen'
+    $lblTema1.Font = New-Object System.Drawing.Font("Arial",16,[System.Drawing.FontStyle]::bold)
+    $lblTema1.Location = New-Object System.Drawing.Point(1125,150)
+    $lblTema1.Size = New-Object System.Drawing.Size(300,50)
+    $foro.Controls.Add($lblTema1)
+    #2
+    $lblTema1 = New-Object System.Windows.Forms.Label
+    $lblTema1.Text = 'Noticias'
+    $lblTema1.ForeColor = 'LightGreen'
+    $lblTema1.Font = New-Object System.Drawing.Font("Arial",16,[System.Drawing.FontStyle]::bold)
+    $lblTema1.Location = New-Object System.Drawing.Point(1125,200)
+    $lblTema1.Size = New-Object System.Drawing.Size(300,50)
+    $foro.Controls.Add($lblTema1)
+    #3
+    $lblTema1 = New-Object System.Windows.Forms.Label
+    $lblTema1.Text = 'Preguntas'
+    $lblTema1.ForeColor = 'LightGreen'
+    $lblTema1.Font = New-Object System.Drawing.Font("Arial",16,[System.Drawing.FontStyle]::bold)
+    $lblTema1.Location = New-Object System.Drawing.Point(1125,250)
+    $lblTema1.Size = New-Object System.Drawing.Size(300,50)
+    $foro.Controls.Add($lblTema1)
+    #4
+    $lblTema1 = New-Object System.Windows.Forms.Label
+    $lblTema1.Text = 'Tecnología'
+    $lblTema1.ForeColor = 'LightGreen'
+    $lblTema1.Font = New-Object System.Drawing.Font("Arial",16,[System.Drawing.FontStyle]::bold)
+    $lblTema1.Location = New-Object System.Drawing.Point(1125,300)
+    $lblTema1.Size = New-Object System.Drawing.Size(300,50)
+    $foro.Controls.Add($lblTema1)
+    #5
+    $lblTema1 = New-Object System.Windows.Forms.Label
+    $lblTema1.Text = 'Opinion'
+    $lblTema1.ForeColor = 'LightGreen'
+    $lblTema1.Font = New-Object System.Drawing.Font("Arial",16,[System.Drawing.FontStyle]::bold)
+    $lblTema1.Location = New-Object System.Drawing.Point(1125,350)
+    $lblTema1.Size = New-Object System.Drawing.Size(300,50)
+    $foro.Controls.Add($lblTema1)
 #Mostrar todo
 $foro.ShowDialog()
