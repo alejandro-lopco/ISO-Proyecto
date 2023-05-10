@@ -20,6 +20,7 @@ Add-Type -AssemblyName System.Drawing
     $foro.Size = New-Object System.Drawing.Size(1600,1000)
     $foro.StartPosition = 'centerscreen'
     $foro.BackColor = 'Black'
+    $nick = $args[0]
 function main {
         #Etiqueta principal
             $lblForo = New-Object System.Windows.Forms.Label
@@ -37,6 +38,35 @@ function main {
             $lblSubForo.Location = New-Object System.Drawing.Point(25,75)
             $lblSubForo.ForeColor = 'Salmon'
             $foro.Controls.Add($lblSubForo)
+}
+function userGreet {
+    #Etiqueta de saludo
+        $lblGreet = New-Object System.Windows.Forms.Label
+        $lblGreet.Text = 'Bienvenido '
+        $lblGreet.ForeColor = 'LightCyan'
+        $lblGreet.Font = New-Object System.Drawing.Font("Arial",16,[System.Drawing.FontStyle]::bold)
+        $lblGreet.Location = New-Object System.Drawing.Point(25,150)
+        $lblGreet.Size = New-Object System.Drawing.Size(130,50)
+        $foro.Controls.Add($lblGreet)
+    #Etiqueta Nick del login
+        $lbluser = New-Object System.Windows.Forms.Label
+        $lbluser.Text = $nick
+        $lbluser.ForeColor = 'Salmon'
+        $lbluser.Font = New-Object System.Drawing.Font("Arial",16,[System.Drawing.FontStyle]::bold)
+        $lbluser.Location = New-Object System.Drawing.Point(150,150)
+        $lbluser.Size = New-Object System.Drawing.Size(100,50)
+        $foro.Controls.Add($lbluser)
+    # Botón para cambiar de usuario
+        $btUser = New-Object System.Windows.Forms.Button
+        $btUser.Text = 'Cambiar de usuario'
+        $btUser.Size = New-Object System.Drawing.Size(200,45)
+        $btUser.Location = New-Object System.Drawing.Point(25,200)
+        $btUser.BackColor = 'White'
+        $btUser.Add_Click({ 
+            $foro.Close()
+            .\Apartados\Foro\foroLogin.ps1 
+        })
+        $foro.Controls.Add($btUser)
 }
 function loadData {
         $usuarios = @{}
@@ -104,27 +134,32 @@ function searchEngine {
         3º Si coincide añadirlo a la tabla has $resSearch con sus datos
             en el array $valoresSearch
     #>
-    $resSearch = @{}
-    if ($opcSearch.SelectedItem -ieq 'Fecha') {
-        foreach ($registroSearch in Get-Content '.\Misc\usrData\Posts.txt') {
+    if ($opcSearch.SelectedItem -ieq 'Tema') {
+        $resSearch = @{}
+        foreach ($registroSearch in Get-Content ".\Misc\usrData\Posts.txt") {
             $valoresSearch = @()
-            for ($i = 0; $i -lt $registroSearch.Count; $i++) {
-                if ($camposPosts[3] -ieq $txtSearch.Text) {
-                    $valoresSearch += $posts[$i]
-                }
+            $camposSearch = $registroSearch.Split("#")
+            for ($j = 1; $j -lt 5; $j++) {
+                if ($camposSearch[1] -ieq $txtSearch.Text ) {
+                    $valoresPosts += $camposPosts[$j]
+                }             
             }
-            $resSearch[[int]$valoresSearch[0]] = $valoresSearch
+            $resSearch[[int]$camposSearch[0]] = $valoresSearch
         }
+        Write-Host $resSearch | Out-String
     } else {
-        foreach ($registroSearch in Get-Content '.\Misc\usrData\Posts.txt') {
+        $resSearch = @{}
+        foreach ($registroSearch in Get-Content ".\Misc\usrData\Posts.txt") {
             $valoresSearch = @()
-            for ($i = 0; $i -lt $registroSearch.Count; $i++) {
-                if ($camposPosts[1] -ieq $txtSearch.Text) {
-                    $valoresSearch += $posts[$i]
+            $camposSearch = $registroSearch.Split("#")
+            for ($j = 1; $j -lt 5; $j++) {
+                if ($camposSearch[3] -ieq $txtSearch.Text ) {
+                    $valoresPosts += $camposPosts[$j]
                 }
             }
-            $resSearch[[int]$valoresSearch[0]] = $valoresSearch
+            $resSearch[[int]$camposSearch[0]] = $valoresSearch
         }
+        Write-Host $resSearch | Out-String
     }
 }
 function temasYSubmenu {
@@ -213,6 +248,7 @@ function temasYSubmenu {
     }
 loadData
 main
+userGreet
 search
 temasYSubmenu
 #Mostrar todo

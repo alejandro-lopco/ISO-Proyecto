@@ -84,7 +84,7 @@ function createAcc {
         $create.ShowDialog()
 }
 function bdAdd {
-    $lblConf.Text = 'Usuario Creado :3'
+    $lblConf.Text = 'Usuario Creado'
     Write-Host ($txtNomCom.Text , $txtnick.Text , $txtPswd.Text , $txtMail.Text)
     $usuario = $txtNomCom.Text+"#"+$txtnick.Text+"#"+$txtPswd.Text+"#"+$txtMail.Text
     $usuario | Out-File ".\Misc\usrData\Oriental.txt" -Append -Encoding ascii
@@ -96,7 +96,7 @@ function checkAcc {
         $pass = $campos[2]
         if ($nick -ieq $txtNom.Text -and $pass -ieq $txtPass.Text) {
             Write-Host "Usuario encontrado, permitiendo acceso"
-            # Aquí va la instrucción de entrada al foro
+            .\Apartados\Foro\Foro.ps1 $nick
         } else {
             Write-Host "Usuario no encontrado, ESTO NO VA"
         }

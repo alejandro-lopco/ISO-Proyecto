@@ -3,7 +3,7 @@ Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 #Declaración de funciones
 function fHoros {
-    .\Apartados\PlaceHolder.ps1
+    .\Apartados\Foro\foroLogin.ps1
 }
 function fPlant {
     .\Apartados\PlaceHolder.ps1
