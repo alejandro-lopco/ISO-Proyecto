@@ -161,6 +161,48 @@ function searchEngine {
         }
         Write-Host $resSearch | Out-String
     }
+    <#
+        $opt = Read-Host ("Introduce nombre de la optativa")
+    for ($i = 1; $i -lt $asignaturas.Lenght; $i++) {
+        if ($asignaturas[$i][0] -ieq $opt) {
+            Write-Host ( "Codigo: " + $i )
+            Write-Host ( "Curso: " + $asignaturas[$i][0] )
+            Write-Host ( "Horas: " + $asignaturas[$i][1] )
+            Write-Host ( "# Alumnos: " + $asignaturas[$i][2] )
+
+        } else {
+            Write-Host ("Nombre no localizado")
+        }
+    }
+    Función  que puede hacerlo mejor (hay que adaptarlas)
+    #>
+}
+function addComm {
+    <#
+    $temporal = @{ 'tormonso18'=('sonia','torres','montero','embajadores, 14','656879220',3,2,4);
+    'marserlu17'=('luis','martin','serrano','fuentecilla, 33','936863301',1,4,5);
+    'alvberro19'=('rocio','alvarez','bermejo','calatrava, 2','626854991',3,5,7);
+    'huemolpe17'=('pedro','huerta','molina','don pedro, 15','912896355',2,10,5);
+    'marrocpa15'=('pablo','marmol','roca','la pedriza, 7','915896600',1,9,2);
+    'berrojma16'=('maria','bermejo','rojo','antonio lopez, 120','916301213',1,3,6);
+    'rammarru18'=('ruben','ramos','martinez','o donnell, 30','917546494',3,10,7);
+    'suatorra16'=('raul','suarez','torres','camarena, 34','916253880',10,1,2);
+    'berrojan18'=('antonio','bermejo','rojo','antonio lopez, 120','916301213',2,4,5)
+}
+foreach ($ele in $temporal.Keys) {
+    $registro = ($ele + ":" + 
+        $temporal[$ele][0] + ":" + 
+        $temporal[$ele][1] + ":" + 
+        $temporal[$ele][2] + ":" + 
+        $temporal[$ele][3] + ":" +
+        $temporal[$ele][4] + ":" +
+        $temporal[$ele][5] + ":" +
+        $temporal[$ele][6] + ":" +
+        $temporal[$ele][7] + ":")
+    $registro | Out-File ".\alumnos2\usuarios.txt" -Append -Encoding utf8
+}
+    Me puede servir para crear posts y añadirlos al fichero de posts.txt
+    #>
 }
 function temasYSubmenu {
     #Label Temas Disponibles
