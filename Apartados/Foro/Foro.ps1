@@ -126,6 +126,21 @@ function searchEngine {
             $resSearch[[int]$valoresSearch[0]] = $valoresSearch
         }
     }
+    <#
+        $opt = Read-Host ("Introduce nombre de la optativa")
+    for ($i = 1; $i -lt $asignaturas.Lenght; $i++) {
+        if ($asignaturas[$i][0] -ieq $opt) {
+            Write-Host ( "Codigo: " + $i )
+            Write-Host ( "Curso: " + $asignaturas[$i][0] )
+            Write-Host ( "Horas: " + $asignaturas[$i][1] )
+            Write-Host ( "# Alumnos: " + $asignaturas[$i][2] )
+
+        } else {
+            Write-Host ("Nombre no localizado")
+        }
+    }
+    Función  que puede hacerlo mejor (hay que adaptarlas)
+    #>
 }
 function temasYSubmenu {
     #Label Temas Disponibles
