@@ -124,58 +124,51 @@ function search {
         $btSearch.Size = New-Object System.Drawing.Size(75,37)
         $btSearch.Location = New-Object System.Drawing.Point(925, 45)
         $btSearch.BackColor = 'White'
-        $btSearch.Add_Click({ searchEngine })
-        $foro.Controls.Add($btSearch)
-}
-function searchEngine {
+        $btSearch.Add_Click({ 
     <#
         1º Comprobar el modo de busqueda
         2º Revisar el archivo y ver si la fecha es igual al input (for)
         3º Si coincide añadirlo a la tabla has $resSearch con sus datos
             en el array $valoresSearch
     #>
-    if ($opcSearch.SelectedItem -ieq 'Tema') {
-        $resSearch = @{}
-        foreach ($registroSearch in Get-Content ".\Misc\usrData\Posts.txt") {
-            $valoresSearch = @()
-            $camposSearch = $registroSearch.Split("#")
-            for ($j = 1; $j -lt 5; $j++) {
-                if ($camposSearch[1] -ieq $txtSearch.Text ) {
-                    $valoresPosts += $camposPosts[$j]
-                }             
-            }
-            $resSearch[[int]$camposSearch[0]] = $valoresSearch
-        }
-        Write-Host $resSearch | Out-String
-    } else {
-        $resSearch = @{}
-        foreach ($registroSearch in Get-Content ".\Misc\usrData\Posts.txt") {
-            $valoresSearch = @()
-            $camposSearch = $registroSearch.Split("#")
-            for ($j = 1; $j -lt 5; $j++) {
-                if ($camposSearch[3] -ieq $txtSearch.Text ) {
-                    $valoresPosts += $camposPosts[$j]
+            if ($opcSearch.SelectedItem -ieq 'Tema') {
+                $search = @{}
+                foreach ($datos in Get-Content ".\Misc\usrData\Posts.txt") {
+                    $linea = @()
+                    $catPost = $datos.Split("#")
+                    for ($i = 0; $i -lt 5; $i++) {
+                        if ($catPost[1] -ieq $txtSearch.Text) {
+                            $linea += $catPost[$i]
+                        }
+                    }
+                    $search[[int]$camposAsig[0]] = $linea
+                }
+            } else {
+                $search = @{}
+                foreach ($datos in Get-Content ".\Misc\usrData\Posts.txt") {
+                    $linea = @()
+                    $catPost = $datos.Split("#")
+                    for ($i = 0; $i -lt 5; $i++) {
+                        if ($catPost[3] -ieq $txtSearch.Text) {
+                            $linea += $catPost[$i]
+                        }
+                    }
+                    $search[[int]$catPost[0]] = $linea
                 }
             }
-            $resSearch[[int]$camposSearch[0]] = $valoresSearch
-        }
-        Write-Host $resSearch | Out-String
-    }
-    <#
-        $opt = Read-Host ("Introduce nombre de la optativa")
-    for ($i = 1; $i -lt $asignaturas.Lenght; $i++) {
-        if ($asignaturas[$i][0] -ieq $opt) {
-            Write-Host ( "Codigo: " + $i )
-            Write-Host ( "Curso: " + $asignaturas[$i][0] )
-            Write-Host ( "Horas: " + $asignaturas[$i][1] )
-            Write-Host ( "# Alumnos: " + $asignaturas[$i][2] )
-
-        } else {
-            Write-Host ("Nombre no localizado")
-        }
-    }
-    Función  que puede hacerlo mejor (hay que adaptarlas)
-    #>
+            for ($i = 0; $i -lt $search.Count; $i++) {
+                Write-Host ( "ID: " + $search[$i] )
+                Write-Host ( "Tema: " + $search[$i][1] )
+                Write-Host ( "Nick: " + $search[$i][2] )
+                Write-Host ( "Fecha: " + $search[$i][3] )
+                Write-Host ( "Comentario:  " + $search[$i][4] )
+                Write-Host ( "-------------" )
+            }
+        })
+        $foro.Controls.Add($btSearch)
+}
+function searchEngine {
+    
 }
 function addComm {
     <#

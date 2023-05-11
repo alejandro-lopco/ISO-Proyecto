@@ -32,8 +32,7 @@ while ($op -ne 5){
                 Write-Host "NOTA2: ", $alumnos[$dni][5][1]
                 Write-Host "NOTA3: ", $alumnos[$dni][5][2]
                 Write-Host "----------------------------------------------"
-           }
-           $x = Read-Host("Pulsa ")
+                }
            }
         2 {Clear-Host
            Write-Host "Buscar alumno"
