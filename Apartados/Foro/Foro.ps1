@@ -39,35 +39,6 @@ function main {
             $lblSubForo.ForeColor = 'Salmon'
             $foro.Controls.Add($lblSubForo)
 }
-function userGreet {
-    #Etiqueta de saludo
-        $lblGreet = New-Object System.Windows.Forms.Label
-        $lblGreet.Text = 'Bienvenido '
-        $lblGreet.ForeColor = 'LightCyan'
-        $lblGreet.Font = New-Object System.Drawing.Font("Arial",16,[System.Drawing.FontStyle]::bold)
-        $lblGreet.Location = New-Object System.Drawing.Point(25,150)
-        $lblGreet.Size = New-Object System.Drawing.Size(130,50)
-        $foro.Controls.Add($lblGreet)
-    #Etiqueta Nick del login
-        $lbluser = New-Object System.Windows.Forms.Label
-        $lbluser.Text = $nick
-        $lbluser.ForeColor = 'Salmon'
-        $lbluser.Font = New-Object System.Drawing.Font("Arial",16,[System.Drawing.FontStyle]::bold)
-        $lbluser.Location = New-Object System.Drawing.Point(150,150)
-        $lbluser.Size = New-Object System.Drawing.Size(100,50)
-        $foro.Controls.Add($lbluser)
-    # Botón para cambiar de usuario
-        $btUser = New-Object System.Windows.Forms.Button
-        $btUser.Text = 'Cambiar de usuario'
-        $btUser.Size = New-Object System.Drawing.Size(200,45)
-        $btUser.Location = New-Object System.Drawing.Point(25,200)
-        $btUser.BackColor = 'White'
-        $btUser.Add_Click({ 
-            $foro.Close()
-            .\Apartados\Foro\foroLogin.ps1 
-        })
-        $foro.Controls.Add($btUser)
-}
 function loadData {
         $usuarios = @{}
         foreach ($registroUser in Get-Content ".\Misc\usrData\Oriental.txt") {
@@ -124,51 +95,25 @@ function search {
         $btSearch.Size = New-Object System.Drawing.Size(75,37)
         $btSearch.Location = New-Object System.Drawing.Point(925, 45)
         $btSearch.BackColor = 'White'
-        $btSearch.Add_Click({ 
-    <#
-        1º Comprobar el modo de busqueda
-        2º Revisar el archivo y ver si la fecha es igual al input (for)
-        3º Si coincide añadirlo a la tabla has $resSearch con sus datos
-            en el array $valoresSearch
-    #>
-            if ($opcSearch.SelectedItem -ieq 'Tema') {
+        $btSearch.Add_Click({
+            if ($opcSearch.SelectedItem -ieq "Fecha") {
                 $search = @{}
-                foreach ($datos in Get-Content ".\Misc\usrData\Posts.txt") {
-                    $linea = @()
-                    $catPost = $datos.Split("#")
-                    for ($i = 0; $i -lt 5; $i++) {
-                        if ($catPost[1] -ieq $txtSearch.Text) {
-                            $linea += $catPost[$i]
-                        }
-                    }
-                    $search[[int]$camposAsig[0]] = $linea
-                }
             } else {
                 $search = @{}
-                foreach ($datos in Get-Content ".\Misc\usrData\Posts.txt") {
-                    $linea = @()
-                    $catPost = $datos.Split("#")
-                    for ($i = 0; $i -lt 5; $i++) {
-                        if ($catPost[3] -ieq $txtSearch.Text) {
-                            $linea += $catPost[$i]
+                foreach ($registroSearch in Get-Content ".\Misc\usrData\Posts.txt") {
+                    $datSearch = @()
+                    $catSearch = $registroSearch.Split("#")
+                    for ($i = 0; $i -lt 4; $i++) {
+                        if ($txtSearch.Text -ieq $catSearch[1]) {
+                            $datSearch += $catSearch[$i]
                         }
                     }
-                    $search[[int]$catPost[0]] = $linea
+                    #$search[[int]$catSearch[0]] = $datSearch
                 }
             }
-            for ($i = 0; $i -lt $search.Count; $i++) {
-                Write-Host ( "ID: " + $search[$i] )
-                Write-Host ( "Tema: " + $search[$i][1] )
-                Write-Host ( "Nick: " + $search[$i][2] )
-                Write-Host ( "Fecha: " + $search[$i][3] )
-                Write-Host ( "Comentario:  " + $search[$i][4] )
-                Write-Host ( "-------------" )
-            }
-        })
+
+         })
         $foro.Controls.Add($btSearch)
-}
-function searchEngine {
-    
 }
 function addComm {
     <#
@@ -283,7 +228,6 @@ function temasYSubmenu {
     }
 loadData
 main
-userGreet
 search
 temasYSubmenu
 #Mostrar todo
