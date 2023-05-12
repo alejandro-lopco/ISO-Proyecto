@@ -6,10 +6,8 @@
         pero se añadiran 2 opciones de búsqueda por fecha o por tema
     - Los usuarios podrán añadir comentarios a temas, pero los temas son fijos
         la estructura <Tema>#<Id. Post>#<nick>#<fecha(dd/mm/yy)>#<cont. Com>
-        (Los posts creo que van a ir mejor si hago una tabla hash)
-
-    - Buscar una manera de dibujar rectangulos
-        o si no directamente juega con el color del fondo 
+        (Los posts creo que van a ir mejor si hago una tabla hash y
+            meto todo el contenido de posts.txt ahí dentro)
 #>
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
@@ -38,6 +36,35 @@ function main {
             $lblSubForo.Location = New-Object System.Drawing.Point(25,75)
             $lblSubForo.ForeColor = 'Salmon'
             $foro.Controls.Add($lblSubForo)
+}
+function userGreet {
+    #Etiqueta de saludo
+        $lblGreet = New-Object System.Windows.Forms.Label
+        $lblGreet.Text = 'Bienvenido '
+        $lblGreet.ForeColor = 'LightCyan'
+        $lblGreet.Font = New-Object System.Drawing.Font("Arial",16,[System.Drawing.FontStyle]::bold)
+        $lblGreet.Location = New-Object System.Drawing.Point(25,150)
+        $lblGreet.Size = New-Object System.Drawing.Size(130,50)
+        $foro.Controls.Add($lblGreet)
+    #Etiqueta Nick del login
+        $lbluser = New-Object System.Windows.Forms.Label
+        $lbluser.Text = $nick
+        $lbluser.ForeColor = 'Salmon'
+        $lbluser.Font = New-Object System.Drawing.Font("Arial",16,[System.Drawing.FontStyle]::bold)
+        $lbluser.Location = New-Object System.Drawing.Point(150,150)
+        $lbluser.Size = New-Object System.Drawing.Size(100,50)
+        $foro.Controls.Add($lbluser)
+    # Botón para cambiar de usuario
+        $btUser = New-Object System.Windows.Forms.Button
+        $btUser.Text = 'Cambiar de usuario'
+        $btUser.Size = New-Object System.Drawing.Size(200,45)
+        $btUser.Location = New-Object System.Drawing.Point(25,200)
+        $btUser.BackColor = 'White'
+        $btUser.Add_Click({ 
+            $foro.Close()
+            .\Apartados\Foro\foroLogin.ps1 
+        })
+        $foro.Controls.Add($btUser)
 }
 function loadData {
         $usuarios = @{}
@@ -96,7 +123,7 @@ function search {
         $btSearch.Location = New-Object System.Drawing.Point(925, 45)
         $btSearch.BackColor = 'White'
         $btSearch.Add_Click({
-            if ($opcSearch.SelectedItem -ieq "Fecha") {
+            <# if ($opcSearch.SelectedItem -ieq "Fecha") {
                 $search = @{}
             } else {
                 $search = @{}
@@ -111,9 +138,100 @@ function search {
                     #$search[[int]$catSearch[0]] = $datSearch
                 }
             }
-
+            #>
          })
         $foro.Controls.Add($btSearch)
+}
+function postDisplay {
+    #Etiqueta de posts
+        $lblPosts = New-Object System.Windows.Forms.Label
+        $lblPosts.Text = 'Últimos Hilos'
+        $lblPosts.Font = New-Object System.Drawing.Font("Arial",18,[System.Drawing.FontStyle]::bold)
+        $lblPosts.Size = New-Object System.Drawing.Size(175,30)
+        $lblPosts.Location = New-Object System.Drawing.Point(350,130)
+        $lblPosts.ForeColor = 'LightGreen'
+        $foro.Controls.Add($lblPosts)
+        #Plantilla de post
+            #Deportes
+                $lblDep = New-Object System.Windows.Forms.Label
+                $lblDep.Text = 'Deportes'
+                $lblDep.Font = New-Object System.Drawing.Font("Arial",14,[System.Drawing.FontStyle]::bold)
+                $lblDep.Size = New-Object System.Drawing.Size(100,30)
+                $lblDep.Location = New-Object System.Drawing.Point(390,185)
+                $lblDep.ForeColor = 'LightGreen'
+                $foro.Controls.Add($lblDep)
+                #Comentario
+                    $lblDepCom = New-Object System.Windows.Forms.Label
+                    $lblDepCom.Text = 'Si Alonso no gana una este año dejo el grado'
+                    $lblDepCom.Font = New-Object System.Drawing.Font(12)
+                    $lblDepCom.Size = New-Object System.Drawing.Size(400,20)
+                    $lblDepCom.Location = New-Object System.Drawing.Point(500,210)
+                    $lblDepCom.ForeColor = 'LightGreen'
+                    $foro.Controls.Add($lblDepCom)
+            #Noticias
+                $lblNot = New-Object System.Windows.Forms.Label
+                $lblNot.Text = 'Noticias'
+                $lblNot.Font = New-Object System.Drawing.Font("Arial",14,[System.Drawing.FontStyle]::bold)
+                $lblNot.Size = New-Object System.Drawing.Size(100,30)
+                $lblNot.Location = New-Object System.Drawing.Point(390,235)
+                $lblNot.ForeColor = 'LightGreen'
+                $foro.Controls.Add($lblNot)
+                #Comentario
+                    $lblNotCom = New-Object System.Windows.Forms.Label
+                    $lblNotCom.Text = 'ULTIMA HORA | me duele la tripa'
+                    $lblNotCom.Font = New-Object System.Drawing.Font(12)
+                    $lblNotCom.Size = New-Object System.Drawing.Size(400,20)
+                    $lblNotCom.Location = New-Object System.Drawing.Point(500,265)
+                    $lblNotCom.ForeColor = 'LightGreen'
+                    $foro.Controls.Add($lblNotCom)
+            #Preguntas
+                $lblAsk = New-Object System.Windows.Forms.Label
+                $lblAsk.Text = 'Preguntas'
+                $lblAsk.Font = New-Object System.Drawing.Font("Arial",14,[System.Drawing.FontStyle]::bold)
+                $lblAsk.Size = New-Object System.Drawing.Size(175,30)
+                $lblAsk.Location = New-Object System.Drawing.Point(390,285)
+                $lblAsk.ForeColor = 'LightGreen'
+                $foro.Controls.Add($lblAsk)
+                    #Comentario
+                        $lblAskCom = New-Object System.Windows.Forms.Label
+                        $lblAskCom.Text = 'JavaScript ¿Desarrolo web o tortura china?'
+                        $lblAskCom.Font = New-Object System.Drawing.Font(12)
+                        $lblAskCom.Size = New-Object System.Drawing.Size(400,20)
+                        $lblAskCom.Location = New-Object System.Drawing.Point(500,315)
+                        $lblAskCom.ForeColor = 'LightGreen'
+                        $foro.Controls.Add($lblAskCom)
+            #Tecnología
+                $lblTech = New-Object System.Windows.Forms.Label
+                $lblTech.Text = 'Tecnología'
+                $lblTech.Font = New-Object System.Drawing.Font("Arial",14,[System.Drawing.FontStyle]::bold)
+                $lblTech.Size = New-Object System.Drawing.Size(175,30)
+                $lblTech.Location = New-Object System.Drawing.Point(390,335)
+                $lblTech.ForeColor = 'LightGreen'
+                $foro.Controls.Add($lblTech)
+                    #Comentario
+                        $lblTechCom = New-Object System.Windows.Forms.Label
+                        $lblTechCom.Text = 'Le has hecho rm -f al repositorio ¿Ahora qué?'
+                        $lblTechCom.Font = New-Object System.Drawing.Font(12)
+                        $lblTechCom.Size = New-Object System.Drawing.Size(400,20)
+                        $lblTechCom.Location = New-Object System.Drawing.Point(500,365)
+                        $lblTechCom.ForeColor = 'LightGreen'
+                        $foro.Controls.Add($lblTechCom)
+            #Opinión
+                $lblOpi = New-Object System.Windows.Forms.Label
+                $lblOpi.Text = 'Opinión'
+                $lblOpi.Font = New-Object System.Drawing.Font("Arial",14,[System.Drawing.FontStyle]::bold)
+                $lblOpi.Size = New-Object System.Drawing.Size(175,30)
+                $lblOpi.Location = New-Object System.Drawing.Point(390,385)
+                $lblOpi.ForeColor = 'LightGreen'
+                $foro.Controls.Add($lblOpi)
+                    #Comentario
+                        $lblOpiCom = New-Object System.Windows.Forms.Label
+                        $lblOpiCom.Text = '¿Es VSC la mejor cosa desde el pan bimbo?'
+                        $lblOpiCom.Font = New-Object System.Drawing.Font(12)
+                        $lblOpiCom.Size = New-Object System.Drawing.Size(400,20)
+                        $lblOpiCom.Location = New-Object System.Drawing.Point(500,365)
+                        $lblOpiCom.ForeColor = 'LightGreen'
+                        $foro.Controls.Add($lblOpiCom)
 }
 function addComm {
     <#
@@ -228,7 +346,9 @@ function temasYSubmenu {
     }
 loadData
 main
+userGreet
 search
+postDisplay
 temasYSubmenu
 #Mostrar todo
 $foro.ShowDialog()
