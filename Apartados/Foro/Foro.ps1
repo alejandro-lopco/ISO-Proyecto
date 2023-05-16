@@ -263,40 +263,42 @@ function createPost {
         $btCreate.Size = New-Object System.Drawing.Size(610,60)
         $btCreate.BackColor = 'dodgerBlue'
         $btCreate.Text = 'Crear Post'
-        $btCreate.Add_Click({
-            foreach ($registroPosts in Get-Content .\Misc\usrData\Posts.txt) {
-                $catPosts = $registroPosts.Split("#")
-            }
-        })
+        $btCreate.Add_Click({ btCrearPost })
         $foro.Controls.Add($btCreate)
-        
+
 }
-function addComm {
-    <#
-    $temporal = @{ 'tormonso18'=('sonia','torres','montero','embajadores, 14','656879220',3,2,4);
-    'marserlu17'=('luis','martin','serrano','fuentecilla, 33','936863301',1,4,5);
-    'alvberro19'=('rocio','alvarez','bermejo','calatrava, 2','626854991',3,5,7);
-    'huemolpe17'=('pedro','huerta','molina','don pedro, 15','912896355',2,10,5);
-    'marrocpa15'=('pablo','marmol','roca','la pedriza, 7','915896600',1,9,2);
-    'berrojma16'=('maria','bermejo','rojo','antonio lopez, 120','916301213',1,3,6);
-    'rammarru18'=('ruben','ramos','martinez','o donnell, 30','917546494',3,10,7);
-    'suatorra16'=('raul','suarez','torres','camarena, 34','916253880',10,1,2);
-    'berrojan18'=('antonio','bermejo','rojo','antonio lopez, 120','916301213',2,4,5)
-}
-foreach ($ele in $temporal.Keys) {
-    $registro = ($ele + ":" + 
-        $temporal[$ele][0] + ":" + 
-        $temporal[$ele][1] + ":" + 
-        $temporal[$ele][2] + ":" + 
-        $temporal[$ele][3] + ":" +
-        $temporal[$ele][4] + ":" +
-        $temporal[$ele][5] + ":" +
-        $temporal[$ele][6] + ":" +
-        $temporal[$ele][7] + ":")
-    $registro | Out-File ".\alumnos2\usuarios.txt" -Append -Encoding utf8
-}
-    Me puede servir para crear posts y añadirlos al fichero de posts.txt
-    #>
+function btCrearPost {
+    # Etiqueta Confirmación 
+        $lblConfCreate = New-Object System.Windows.Forms.Label
+        $lblConfCreate.Text = 'Post'
+        $lblConfCreate.Size = New-Object System.Drawing.Size(500,300)
+        $lblConfCreate.Location = New-Object System.Drawing.Point(390,720)
+        $lblConfCreate.Font = New-Object System.Drawing.Font("Arial",18,[System.Drawing.FontStyle]::bold)
+        $lblConfCreate.ForeColor = 'plum'
+        $foro.Controls.Add($lblConfCreate) 
+    # Extraer información
+        [string]$tema = $opcTema.SelectedItem
+        [string]$fecha = Get-Date -Format "dd/mm/yyyy"
+        [string]$comentario = $txtCom.Text
+        $id = 5
+        foreach ($registroPosts in Get-Content .\Misc\usrData\Posts.txt) {
+            $catPosts = $registroPosts.Split("#")
+            $num = $catPosts[0]
+            if ($id -lt $num) {
+                $id += 1
+            }
+        }
+    # Añadir información
+        [string]$post = $id+"#"+$tema+"#"+$nick+"#"+$fecha+"#"+$comentario
+        $post | Out-File ".\Misc\usrData\Posts.txt" -Append -Encoding ascii
+        $lblConfCreate.Text = (
+            'Post Creado'+
+            'ID: '+ $id +
+            'Tema: '+ $tema +
+            'Nick: '+ $nick +
+            'Fecha: '+ $fecha +
+            'Comentario: '+ $comentario
+            )
 }
 function temasYSubmenu {
     #Label Temas Disponibles
