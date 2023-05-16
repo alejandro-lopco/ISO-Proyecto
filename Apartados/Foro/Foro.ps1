@@ -123,22 +123,7 @@ function search {
         $btSearch.Location = New-Object System.Drawing.Point(925, 45)
         $btSearch.BackColor = 'White'
         $btSearch.Add_Click({
-            <# if ($opcSearch.SelectedItem -ieq "Fecha") {
-                $search = @{}
-            } else {
-                $search = @{}
-                foreach ($registroSearch in Get-Content ".\Misc\usrData\Posts.txt") {
-                    $datSearch = @()
-                    $catSearch = $registroSearch.Split("#")
-                    for ($i = 0; $i -lt 4; $i++) {
-                        if ($txtSearch.Text -ieq $catSearch[1]) {
-                            $datSearch += $catSearch[$i]
-                        }
-                    }
-                    #$search[[int]$catSearch[0]] = $datSearch
-                }
-            }
-            #>
+
          })
         $foro.Controls.Add($btSearch)
 }
@@ -163,7 +148,6 @@ function postDisplay {
                 #Comentario
                     $lblDepCom = New-Object System.Windows.Forms.Label
                     $lblDepCom.Text = 'Si Alonso no gana una este año dejo el grado'
-                    $lblDepCom.Font = New-Object System.Drawing.Font(12)
                     $lblDepCom.Size = New-Object System.Drawing.Size(400,20)
                     $lblDepCom.Location = New-Object System.Drawing.Point(500,210)
                     $lblDepCom.ForeColor = 'LightGreen'
@@ -179,7 +163,6 @@ function postDisplay {
                 #Comentario
                     $lblNotCom = New-Object System.Windows.Forms.Label
                     $lblNotCom.Text = 'ULTIMA HORA | me duele la tripa'
-                    $lblNotCom.Font = New-Object System.Drawing.Font(12)
                     $lblNotCom.Size = New-Object System.Drawing.Size(400,20)
                     $lblNotCom.Location = New-Object System.Drawing.Point(500,265)
                     $lblNotCom.ForeColor = 'LightGreen'
@@ -195,7 +178,6 @@ function postDisplay {
                     #Comentario
                         $lblAskCom = New-Object System.Windows.Forms.Label
                         $lblAskCom.Text = 'JavaScript ¿Desarrolo web o tortura china?'
-                        $lblAskCom.Font = New-Object System.Drawing.Font(12)
                         $lblAskCom.Size = New-Object System.Drawing.Size(400,20)
                         $lblAskCom.Location = New-Object System.Drawing.Point(500,315)
                         $lblAskCom.ForeColor = 'LightGreen'
@@ -211,7 +193,6 @@ function postDisplay {
                     #Comentario
                         $lblTechCom = New-Object System.Windows.Forms.Label
                         $lblTechCom.Text = 'Le has hecho rm -f al repositorio ¿Ahora qué?'
-                        $lblTechCom.Font = New-Object System.Drawing.Font(12)
                         $lblTechCom.Size = New-Object System.Drawing.Size(400,20)
                         $lblTechCom.Location = New-Object System.Drawing.Point(500,365)
                         $lblTechCom.ForeColor = 'LightGreen'
@@ -221,17 +202,74 @@ function postDisplay {
                 $lblOpi.Text = 'Opinión'
                 $lblOpi.Font = New-Object System.Drawing.Font("Arial",14,[System.Drawing.FontStyle]::bold)
                 $lblOpi.Size = New-Object System.Drawing.Size(175,30)
-                $lblOpi.Location = New-Object System.Drawing.Point(390,385)
+                $lblOpi.Location = New-Object System.Drawing.Point(390,395)
                 $lblOpi.ForeColor = 'LightGreen'
                 $foro.Controls.Add($lblOpi)
                     #Comentario
                         $lblOpiCom = New-Object System.Windows.Forms.Label
                         $lblOpiCom.Text = '¿Es VSC la mejor cosa desde el pan bimbo?'
-                        $lblOpiCom.Font = New-Object System.Drawing.Font(12)
                         $lblOpiCom.Size = New-Object System.Drawing.Size(400,20)
-                        $lblOpiCom.Location = New-Object System.Drawing.Point(500,365)
+                        $lblOpiCom.Location = New-Object System.Drawing.Point(500,425)
                         $lblOpiCom.ForeColor = 'LightGreen'
                         $foro.Controls.Add($lblOpiCom)
+}
+function createPost {
+    #Etiqueta Principal
+    $lblCreate = New-Object System.Windows.Forms.Label
+    $lblCreate.Text = 'Últimos Hilos'
+    $lblCreate.Font = New-Object System.Drawing.Font("Arial",18,[System.Drawing.FontStyle]::bold)
+    $lblCreate.Size = New-Object System.Drawing.Size(175,30)
+    $lblCreate.Location = New-Object System.Drawing.Point(350,475)
+    $lblCreate.ForeColor = 'LightCyan'
+    $foro.Controls.Add($lblCreate)
+        # Etiquetas Inputs Campos
+            # Tema
+            $lblTema = New-Object System.Windows.Forms.Label
+            $lblTema.Text = 'Tema:'
+            $lblTema.Font = New-Object System.Drawing.Font("Arial",14,[System.Drawing.FontStyle]::bold)
+            $lblTema.Size = New-Object System.Drawing.Size(125,30)
+            $lblTema.Location = New-Object System.Drawing.Point(390,520)
+            $lblTema.ForeColor = 'LightCyan'
+            $foro.Controls.Add($lblTema)
+            # Comentario
+            $lblCom = New-Object System.Windows.Forms.Label
+            $lblCom.Text = 'Comentario:'
+            $lblCom.Font = New-Object System.Drawing.Font("Arial",14,[System.Drawing.FontStyle]::bold)
+            $lblCom.Size = New-Object System.Drawing.Size(125,30)
+            $lblCom.Location = New-Object System.Drawing.Point(390,580)
+            $lblCom.ForeColor = 'LightCyan'
+            $foro.Controls.Add($lblCom)
+        # Inputs Campos
+            # Temas
+            $opcTema = New-Object System.Windows.Forms.ComboBox
+            $opcTema.Location = New-Object System.Drawing.Point(550,520)
+            $opcTema.Size = New-Object System.Drawing.Size(135,40)
+            $opcTema.Text = 'Tema'
+            $opcTema.Font = New-Object System.Drawing.Font("Arial",16,[System.Drawing.FontStyle]::bold)
+            $opcTema.Items.Add("Deportes") > $null
+            $opcTema.Items.Add("Noticias") > $null
+            $opcTema.Items.Add("Preguntas") > $null
+            $opcTema.Items.Add("Tecnología") > $null
+            $opcTema.Items.Add("Opinión") > $null
+            $foro.Controls.Add($opcTema)
+            # Comentario
+            $txtCom = New-Object System.Windows.Forms.TextBox
+            $txtCom.Size = New-Object System.Drawing.Size(450,40)
+            $txtCom.Location = New-Object System.Drawing.Point(550,580)
+            $foro.Controls.Add($txtCom)
+        # Botón Crear
+        $btCreate = New-Object System.Windows.Forms.Button
+        $btCreate.Location = New-Object System.Drawing.Point(390,620)
+        $btCreate.Size = New-Object System.Drawing.Size(610,60)
+        $btCreate.BackColor = 'dodgerBlue'
+        $btCreate.Text = 'Crear Post'
+        $btCreate.Add_Click({
+            foreach ($registroPosts in Get-Content .\Misc\usrData\Posts.txt) {
+                $catPosts = $registroPosts.Split("#")
+            }
+        })
+        $foro.Controls.Add($btCreate)
+        
 }
 function addComm {
     <#
@@ -349,6 +387,7 @@ main
 userGreet
 search
 postDisplay
+createPost
 temasYSubmenu
 #Mostrar todo
 $foro.ShowDialog()
