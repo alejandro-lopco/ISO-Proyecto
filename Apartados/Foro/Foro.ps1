@@ -12,13 +12,6 @@
 Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 #Declaración de funciones
-    # Area principal
-    $foro = New-Object System.Windows.Forms.Form
-    $foro.Text = 'Foro'
-    $foro.Size = New-Object System.Drawing.Size(1600,1000)
-    $foro.StartPosition = 'centerscreen'
-    $foro.BackColor = 'Black'
-    $nick = $args[0]
 function main {
         #Etiqueta principal
             $lblForo = New-Object System.Windows.Forms.Label
@@ -213,60 +206,6 @@ function postDisplay {
                         $lblOpiCom.ForeColor = 'LightGreen'
                         $foro.Controls.Add($lblOpiCom)
 }
-function createPost {
-    #Etiqueta Principal
-    $lblCreate = New-Object System.Windows.Forms.Label
-    $lblCreate.Text = 'Últimos Hilos'
-    $lblCreate.Font = New-Object System.Drawing.Font("Arial",18,[System.Drawing.FontStyle]::bold)
-    $lblCreate.Size = New-Object System.Drawing.Size(175,30)
-    $lblCreate.Location = New-Object System.Drawing.Point(350,475)
-    $lblCreate.ForeColor = 'LightCyan'
-    $foro.Controls.Add($lblCreate)
-        # Etiquetas Inputs Campos
-            # Tema
-            $lblTema = New-Object System.Windows.Forms.Label
-            $lblTema.Text = 'Tema:'
-            $lblTema.Font = New-Object System.Drawing.Font("Arial",14,[System.Drawing.FontStyle]::bold)
-            $lblTema.Size = New-Object System.Drawing.Size(125,30)
-            $lblTema.Location = New-Object System.Drawing.Point(390,520)
-            $lblTema.ForeColor = 'LightCyan'
-            $foro.Controls.Add($lblTema)
-            # Comentario
-            $lblCom = New-Object System.Windows.Forms.Label
-            $lblCom.Text = 'Comentario:'
-            $lblCom.Font = New-Object System.Drawing.Font("Arial",14,[System.Drawing.FontStyle]::bold)
-            $lblCom.Size = New-Object System.Drawing.Size(125,30)
-            $lblCom.Location = New-Object System.Drawing.Point(390,580)
-            $lblCom.ForeColor = 'LightCyan'
-            $foro.Controls.Add($lblCom)
-        # Inputs Campos
-            # Temas
-            $opcTema = New-Object System.Windows.Forms.ComboBox
-            $opcTema.Location = New-Object System.Drawing.Point(550,520)
-            $opcTema.Size = New-Object System.Drawing.Size(135,40)
-            $opcTema.Text = 'Tema'
-            $opcTema.Font = New-Object System.Drawing.Font("Arial",16,[System.Drawing.FontStyle]::bold)
-            $opcTema.Items.Add("Deportes") > $null
-            $opcTema.Items.Add("Noticias") > $null
-            $opcTema.Items.Add("Preguntas") > $null
-            $opcTema.Items.Add("Tecnología") > $null
-            $opcTema.Items.Add("Opinión") > $null
-            $foro.Controls.Add($opcTema)
-            # Comentario
-            $txtCom = New-Object System.Windows.Forms.TextBox
-            $txtCom.Size = New-Object System.Drawing.Size(450,40)
-            $txtCom.Location = New-Object System.Drawing.Point(550,580)
-            $foro.Controls.Add($txtCom)
-        # Botón Crear
-        $btCreate = New-Object System.Windows.Forms.Button
-        $btCreate.Location = New-Object System.Drawing.Point(390,620)
-        $btCreate.Size = New-Object System.Drawing.Size(610,60)
-        $btCreate.BackColor = 'dodgerBlue'
-        $btCreate.Text = 'Crear Post'
-        $btCreate.Add_Click({ btCrearPost })
-        $foro.Controls.Add($btCreate)
-
-}
 function btCrearPost {
     # Etiqueta Confirmación 
         $lblConfCreate = New-Object System.Windows.Forms.Label
@@ -275,29 +214,29 @@ function btCrearPost {
         $lblConfCreate.Location = New-Object System.Drawing.Point(390,720)
         $lblConfCreate.Font = New-Object System.Drawing.Font("Arial",18,[System.Drawing.FontStyle]::bold)
         $lblConfCreate.ForeColor = 'plum'
-        $foro.Controls.Add($lblConfCreate) 
+        $foro.Controls.Add($lblConfCreate)
     # Extraer información
         [string]$tema = $opcTema.SelectedItem
-        [string]$fecha = Get-Date -Format "dd/mm/yyyy"
+        [string]$fecha = Get-Date -Format "dd/MM/yyyy"
+            Write-Host $fecha
         [string]$comentario = $txtCom.Text
-        $id = 5
+            Write-Host $comentario
+        $idMin = 0
         foreach ($registroPosts in Get-Content .\Misc\usrData\Posts.txt) {
-            $catPosts = $registroPosts.Split("#")
-            $num = $catPosts[0]
-            if ($id -lt $num) {
-                $id += 1
-            }
+            $idMin += 1
         }
+        [string]$id = $idMin + 1
+            Write-Host $id
     # Añadir información
         [string]$post = $id+"#"+$tema+"#"+$nick+"#"+$fecha+"#"+$comentario
-        $post | Out-File ".\Misc\usrData\Posts.txt" -Append -Encoding ascii
+        $post | Out-File ".\Misc\usrData\Posts.txt" -Append -Encoding utf8
         $lblConfCreate.Text = (
-            'Post Creado'+
-            'ID: '+ $id +
-            'Tema: '+ $tema +
-            'Nick: '+ $nick +
-            'Fecha: '+ $fecha +
-            'Comentario: '+ $comentario
+            '-Post Creado-'+
+            ' // ID: '+ $id +
+            ' // Tema: '+ $tema +
+            ' // Nick: '+ $nick +
+            ' // Fecha: '+ $fecha +
+            ' // Comentario: '+ $comentario
             )
 }
 function temasYSubmenu {
@@ -384,12 +323,79 @@ function temasYSubmenu {
             $btExit.Add_Click({ $foro.Close() })
             $foro.Controls.Add($btExit)
     }
-loadData
-main
-userGreet
-search
-postDisplay
-createPost
-temasYSubmenu
+# Area principal
+    $foro = New-Object System.Windows.Forms.Form
+    $foro.Text = 'Foro'
+    $foro.Size = New-Object System.Drawing.Size(1600,1000)
+    $foro.StartPosition = 'centerscreen'
+    $foro.BackColor = 'Black'
+    $nick = $args[0]
+# Inicialización de Menus
+    loadData
+    main
+    userGreet
+    search
+    postDisplay
+    temasYSubmenu
+# Crear Post
+    #Etiqueta Principal
+    $lblCreate = New-Object System.Windows.Forms.Label
+    $lblCreate.Text = 'Últimos Hilos'
+    $lblCreate.Font = New-Object System.Drawing.Font("Arial",18,[System.Drawing.FontStyle]::bold)
+    $lblCreate.Size = New-Object System.Drawing.Size(175,30)
+    $lblCreate.Location = New-Object System.Drawing.Point(350,475)
+    $lblCreate.ForeColor = 'LightCyan'
+    $foro.Controls.Add($lblCreate)
+        # Etiquetas Inputs Campos
+            # Tema
+            $lblTema = New-Object System.Windows.Forms.Label
+            $lblTema.Text = 'Tema:'
+            $lblTema.Font = New-Object System.Drawing.Font("Arial",14,[System.Drawing.FontStyle]::bold)
+            $lblTema.Size = New-Object System.Drawing.Size(125,30)
+            $lblTema.Location = New-Object System.Drawing.Point(390,520)
+            $lblTema.ForeColor = 'LightCyan'
+            $foro.Controls.Add($lblTema)
+            # Etiqueta explicacion
+            $lblExp = New-Object System.Windows.Forms.Label
+            $lblExp.Text = 'CLICK PARA CONFIRMAR EL TEMA'
+            $lblExp.Size = New-Object System.Drawing.Size(200,40)
+            $lblExp.Location = New-Object System.Drawing.Point(700,525)
+            $lblExp.ForeColor = 'LightCyan'
+            $foro.Controls.Add($lblExp)
+            # Comentario
+            $lblCom = New-Object System.Windows.Forms.Label
+            $lblCom.Text = 'Comentario:'
+            $lblCom.Font = New-Object System.Drawing.Font("Arial",14,[System.Drawing.FontStyle]::bold)
+            $lblCom.Size = New-Object System.Drawing.Size(125,30)
+            $lblCom.Location = New-Object System.Drawing.Point(390,580)
+            $lblCom.ForeColor = 'LightCyan'
+            $foro.Controls.Add($lblCom)
+        # Inputs Campos
+            # Temas
+            $opcTema = New-Object System.Windows.Forms.ListBox
+            $opcTema.Location = New-Object System.Drawing.Point(550,520)
+            $opcTema.Size = New-Object System.Drawing.Size(135,40)
+            $opcTema.Font = New-Object System.Drawing.Font("Arial",16,[System.Drawing.FontStyle]::bold)
+            $opcTema.Items.Add("Deportes") > $null
+            $opcTema.Items.Add("Noticias") > $null
+            $opcTema.Items.Add("Preguntas") > $null
+            $opcTema.Items.Add("Tecnología") > $null
+            $opcTema.Items.Add("Opinión") > $null
+            $opcTema.Items
+            $foro.Controls.Add($opcTema)
+            # Comentario
+            $txtCom = New-Object System.Windows.Forms.TextBox
+            $txtCom.Size = New-Object System.Drawing.Size(450,40)
+            $txtCom.Text = ' '
+            $txtCom.Location = New-Object System.Drawing.Point(550,580)
+            $foro.Controls.Add($txtCom)
+        # Botón Crear
+        $btCreate = New-Object System.Windows.Forms.Button
+        $btCreate.Location = New-Object System.Drawing.Point(390,620)
+        $btCreate.Size = New-Object System.Drawing.Size(610,60)
+        $btCreate.BackColor = 'dodgerBlue'
+        $btCreate.Text = 'Crear Post'
+        $btCreate.Add_Click({ btCrearPost })
+        $foro.Controls.Add($btCreate)
 #Mostrar todo
 $foro.ShowDialog()
