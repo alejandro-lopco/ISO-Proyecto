@@ -104,7 +104,7 @@ function search {
         $foro.Controls.Add($txtSearch)
     #Label Opción
         $lblOpc = New-Object System.Windows.Forms.Label
-        $lblOpc.Text = 'Formato Fecha (DD/MM/AA)'
+        $lblOpc.Text = 'Formato Fecha (AAAA-MM-DD)'
         $lblOpc.Size = New-Object System.Drawing.Size(175,20)
         $lblOpc.Location = New-Object System.Drawing.Point(710,35)
         $lblOpc.ForeColor = 'LightCyan'
@@ -115,9 +115,7 @@ function search {
         $btSearch.Size = New-Object System.Drawing.Size(75,37)
         $btSearch.Location = New-Object System.Drawing.Point(925, 45)
         $btSearch.BackColor = 'White'
-        $btSearch.Add_Click({
-
-         })
+        $btSearch.Add_Click({ })
         $foro.Controls.Add($btSearch)
 }
 function postDisplay {
