@@ -3,13 +3,13 @@ Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
 #Declaración de funciones
 function fHoros {
-    .\Apartados\Foro\foroLogin.ps1
+    .\Apartados\Horoscopo\Horoscopo.ps1
 }
 function fPlant {
-    .\Apartados\PlaceHolder.ps1
+    .\Apartados\Plantas\Plantas.ps1
 }
 function  fForo {
-    .\Apartados\PlaceHolder.ps1
+    .\Apartados\Foro\foroLogin.ps1
 }
 function  fExit {
     $menu.Close()    

@@ -2,7 +2,7 @@
 Proyecto horóscopo con plantas medicinales e integración Reddit en Powershell
 Crear en PowerShell un script que nos muestre una página de entretenimiento con:
   -     Horóscopo Occidental
-  -     Horóscopo chino
+  -     Horóscopo Chino
   -     Número mágico
   -     Plantas Medicinales
   -     Foro

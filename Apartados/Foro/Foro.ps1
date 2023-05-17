@@ -304,7 +304,7 @@ function temasYSubmenu {
             $btHoros.Size = New-Object System.Drawing.Size(400,90)
             $btHoros.Location = New-Object System.Drawing.Point(1120, 575)
             $btHoros.BackColor = 'SpringGreen'
-            $btHoros.Add_Click({ .\Apartados\PlaceHolder.ps1 })
+            $btHoros.Add_Click({ .\Apartados\Horoscopo\Horoscopo.ps1 })
             $foro.Controls.Add($btHoros)
         #Plantas
             $btPlants = New-Object System.Windows.Forms.Button
@@ -312,7 +312,7 @@ function temasYSubmenu {
             $btPlants.Size = New-Object System.Drawing.Size(400,90)
             $btPlants.Location = New-Object System.Drawing.Point(1120, 675)
             $btPlants.BackColor = 'YellowGreen'
-            $btPlants.Add_Click({ .\Apartados\PlaceHolder.ps1 })
+            $btPlants.Add_Click({ .\Apartados\Plantas\Plantas.ps1 })
             $foro.Controls.Add($btPlants)
         #Salir
             $btExit = New-Object System.Windows.Forms.Button
