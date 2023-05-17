@@ -421,7 +421,144 @@ function Chino {
     }
 }
 function Numero {
-    
+    # https://rpp.pe/capital/horoscopo/este-es-tu-numero-magico-segun-tu-fecha-de-nacimiento-ag-noticias-1437111
+    $lblRes.ForeColor = 'Coral'
+    $res.ForeColor = 'Coral'
+    $occDate = Get-Date -Format 'MM-dd' $txtDate.Text
+    $mes = Get-Date -Format 'MM' $occDate
+        $mes1 = $mes[0]
+        $mes2 = $mes[1]
+    $dia = Get-Date -Format 'dd' $occDate
+        $dia1 = $dia[0]
+        $dia2 = $dia[1]
+    $anyo = Get-Date -Format 'yyyy' $occDate
+        $anyo1 = $anyo[0]
+        $anyo2 = $anyo[1]
+        $anyo3 = $anyo[2]
+        $anyo4 = $anyo[3]
+    [int]$numRes = [int]$anyo1 += [int]$anyo2 += [int]$anyo3 += [int]$anyo4 += [int]$mes1 += [int]$mes2 += [int]$dia1 += [int]$dia2
+    Write-Host "Primer Valor" $numRes
+    if (    
+        $numRes -lt 10 -or
+        $numRes -eq 11 -or
+        $numRes -eq 22 -or
+        $numRes -eq 33 -or
+        $numRes -eq 44
+    ) {
+        switch ($numRes) {
+            1   { 
+                $res.Text = 'Número Mágico:' + $numRes + '//' + 'Si este es tu número significa que eres un líder por naturaleza, siempre das un paso adelante y disfrutas de tu independencia. 
+                Eres muy entusiasta y sociable, pero no sabes obedecer y seguir órdenes.'
+             }
+            2   { 
+                $res.Text = 'Número Mágico:' + $numRes + '//' + 'Te gusta estar en armonía y quieres cumplir con las expectativas de todos. 
+                Si no lo hacer puedes llegar a sentirte triste e insegura. Además, suelen depender mucho de otras personas.'
+             }
+            3   { 
+                $res.Text = 'Número Mágico:' + $numRes + '//' + 'Eres una persona que se deja llevar por los celos y critica a otras personas, ya que no puedes evitar ser imprudente y decir lo que piensas, aunque estés equivocada.'
+             }
+            4   { 
+                $res.Text = 'Número Mágico:' + $numRes + '//' +  'Eres una persona muy disciplinada, te fijas en todos los mínimos detalles y sueles ser precavida. 
+                Puedes llegar a cumplir con tus metas con tu esfuerzo y dedicación. Sin embargo, deberías ser más espontánea y disfrutar de las sorpresas.'
+             }
+            5   { 
+                $res.Text = 'Número Mágico:' + $numRes + '//' +  'Eres amante de la aventura, te gusta vivir nuevas experiencias y viajar cada vez que puedas. 
+                Esto puede distraerte de tus tareas y de tus objetivos a futuro.'
+             }
+            6   { 
+                $res.Text = 'Número Mágico:' + $numRes + '//' +  'Amas pasar tiempo con tu familia y disfrutas de la naturaleza, también puedes ser idealista y posesivo con las personas que estimas.'
+             }  
+            7   { 
+                $res.Text = 'Número Mágico:' + $numRes + '//' +  'Aprovechas mucho tu tiempo en soledad para reflexionar sobre tu vida y pensar en ti. 
+                Te gusta la filosofía y encontrarle sentido a tu vida. Aunque esto te puede llevar a aislarte de los demás y ser muy melancólico.'
+             }
+            8   { 
+                $res.Text = 'Número Mágico:' + $numRes + '//' +  'Te gusta motivar a las personas a tu alrededor, eres una persona muy perseverante y cualquier negocio que manejes los sacarás adelante.'
+             }
+            9   { 
+                $res.Text = 'Número Mágico:' + $numRes + '//' +  'Eres una persona sensible y compasiva, sin embargo, puedes llegar a decepcionarte de las personas con mucha facilidad.'
+             }
+            11  { 
+                $res.Text = 'Número Mágico:' + $numRes + '//' +  'Eres una persona muy intuitiva y perfeccionista, quieres seguir tus propias reglas y planes.'
+             }
+            22  { 
+                $res.Text = 'Número Mágico:' + $numRes + '//' +  'Aprecias mucho lo material en la vida y tienes talento para las manualidades. 
+                Por otro lado, puedes llegar a desear más de lo que puedes manejar. 
+                No te dejes llevar por la avaricia.'
+             }
+            33  { 
+                $res.Text = 'Número Mágico:' + $numRes + '//' +  'Eres una persona muy espiritual, transmites humildad y armonía. 
+                No dejes que pensamientos egoístas arruinen lo que lograste.'
+             }
+            44  { 
+                $res.Text = 'Número Mágico:' + $numRes + '//' +  'Las personas te seguirán por tu esfuerzo y perseverancia, por lo que debes tener muy claro tus ideales.'
+             }
+            Default { Write-Host 'EING'}
+        }   
+    } else {
+        do {
+            [int]$num1 = [string]$numRes[0]
+            [int]$num2 = [string]$numRes[1]
+            [int]$numRes = $num1 + $num2
+        } while (
+            $numRes -lt 10 -or
+            $numRes -eq 11 -or
+            $numRes -eq 22 -or
+            $numRes -eq 33 -or
+            $numRes -eq 44
+        )
+        switch ($numRes) {
+            1   { 
+                $res.Text = 'Número Mágico:' + $numRes + '//' + 'Si este es tu número significa que eres un líder por naturaleza, siempre das un paso adelante y disfrutas de tu independencia. 
+                Eres muy entusiasta y sociable, pero no sabes obedecer y seguir órdenes.'
+             }
+            2   { 
+                $res.Text = 'Número Mágico:' + $numRes + '//' + 'Te gusta estar en armonía y quieres cumplir con las expectativas de todos. 
+                Si no lo hacer puedes llegar a sentirte triste e insegura. Además, suelen depender mucho de otras personas.'
+             }
+            3   { 
+                $res.Text = 'Número Mágico:' + $numRes + '//' + 'Eres una persona que se deja llevar por los celos y critica a otras personas, ya que no puedes evitar ser imprudente y decir lo que piensas, aunque estés equivocada.'
+             }
+            4   { 
+                $res.Text = 'Número Mágico:' + $numRes + '//' +  'Eres una persona muy disciplinada, te fijas en todos los mínimos detalles y sueles ser precavida. 
+                Puedes llegar a cumplir con tus metas con tu esfuerzo y dedicación. Sin embargo, deberías ser más espontánea y disfrutar de las sorpresas.'
+             }
+            5   { 
+                $res.Text = 'Número Mágico:' + $numRes + '//' +  'Eres amante de la aventura, te gusta vivir nuevas experiencias y viajar cada vez que puedas. 
+                Esto puede distraerte de tus tareas y de tus objetivos a futuro.'
+             }
+            6   { 
+                $res.Text = 'Número Mágico:' + $numRes + '//' +  'Amas pasar tiempo con tu familia y disfrutas de la naturaleza, también puedes ser idealista y posesivo con las personas que estimas.'
+             }  
+            7   { 
+                $res.Text = 'Número Mágico:' + $numRes + '//' +  'Aprovechas mucho tu tiempo en soledad para reflexionar sobre tu vida y pensar en ti. 
+                Te gusta la filosofía y encontrarle sentido a tu vida. Aunque esto te puede llevar a aislarte de los demás y ser muy melancólico.'
+             }
+            8   { 
+                $res.Text = 'Número Mágico:' + $numRes + '//' +  'Te gusta motivar a las personas a tu alrededor, eres una persona muy perseverante y cualquier negocio que manejes los sacarás adelante.'
+             }
+            9   { 
+                $res.Text = 'Número Mágico:' + $numRes + '//' +  'Eres una persona sensible y compasiva, sin embargo, puedes llegar a decepcionarte de las personas con mucha facilidad.'
+             }
+            11  { 
+                $res.Text = 'Número Mágico:' + $numRes + '//' +  'Eres una persona muy intuitiva y perfeccionista, quieres seguir tus propias reglas y planes.'
+             }
+            22  { 
+                $res.Text = 'Número Mágico:' + $numRes + '//' +  'Aprecias mucho lo material en la vida y tienes talento para las manualidades. 
+                Por otro lado, puedes llegar a desear más de lo que puedes manejar. 
+                No te dejes llevar por la avaricia.'
+             }
+            33  { 
+                $res.Text = 'Número Mágico:' + $numRes + '//' +  'Eres una persona muy espiritual, transmites humildad y armonía. 
+                No dejes que pensamientos egoístas arruinen lo que lograste.'
+             }
+            44  { 
+                $res.Text = 'Número Mágico:' + $numRes + '//' +  'Las personas te seguirán por tu esfuerzo y perseverancia, por lo que debes tener muy claro tus ideales.'
+             }
+            Default { Write-Host 'EING2'}
+        }    
+    }
+    Write-Host "resultado final" $numRes
 }
 function subMenus {
     #Botones para otros apartados
@@ -522,7 +659,6 @@ function subMenus {
 # Inicialización de Menus
     main
     curDate
-    Input
     subMenus
 # Mostrar todo
     $horo.ShowDialog()
