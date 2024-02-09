@@ -1,5 +1,6 @@
 # ISO-Proyecto Alejandro López Corral
-Proyecto horóscopo con plantas medicinales e integración Reddit en Powershell
+Proyecto final de año de Instalación de Sistemas Operativos
+Horóscopo con plantas medicinales e integración de fotro en Powershell
 Crear en PowerShell un script que nos muestre una página de entretenimiento con:
   -     Horóscopo Occidental
   -     Horóscopo Chino
